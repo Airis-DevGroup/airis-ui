@@ -22,7 +22,7 @@ export default {
       type: [Number, String],
       default: 0,
       validator: (value) => {
-        if (value == 'number') return true;
+        if (typeof value == 'number') return true;
         else {
           try {
             Number(value);
