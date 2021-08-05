@@ -15,7 +15,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "concurrently --raw --kill-others --success first \"yarn workspace @airis-ui/vue dev\""
+    "dev": "concurrently --raw --kill-others --success first \"yarn workspace @airis-ui/vue dev\"",
+    "build": "concurrently --raw --kill-others --success first \"yarn workspace @airis-ui/vue build:lib\""
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
