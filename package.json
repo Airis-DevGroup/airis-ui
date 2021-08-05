@@ -1,0 +1,24 @@
+{
+  "name": "airis-ui",
+  "version": "0.0.1",
+  "private": true,
+  "contributors": [
+    "Daniel Hernández <danhernan23i@gmail.com>",
+    "Fabiana Moreno <fabiana.moreno.fm@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Airis-DevGroup/airis-ui"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently --raw --kill-others --success first \"yarn workspace @airis-ui/vue dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.3"
+  }
+}

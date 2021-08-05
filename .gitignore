@@ -1,0 +1,31 @@
+.DS_Store
+node_modules
+
+# local env files
+.env.local
+.env.*.local
+.env*
+!.env.example
+!.env.example
+
+# Built files
+dist
+build
+
+# Log files
+*.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# Striclty using Yarn
+package-lock.json
+
+# Optional npm cache directory
+.npm
