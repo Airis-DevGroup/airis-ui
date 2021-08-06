@@ -13,7 +13,11 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "dev": "lerna run --parallel dev",
-    "build": "lerna run --parallel build"
+    "dev:vue": "lerna run --scope @airis-ui/vue dev",
+    "dev:react": "lerna run --scope @airis-ui/react dev",
+    "build": "lerna run --parallel build",
+    "build:vue": "lerna run --scope @airis-ui/vue build",
+    "build:react": "lerna run --scope @airis-ui/react build"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
