@@ -1,6 +1,5 @@
 {
   "name": "airis-ui",
-  "version": "0.0.1",
   "private": true,
   "contributors": [
     "Daniel Hernández <danhernan23i@gmail.com>",
@@ -11,15 +10,13 @@
     "url": "https://github.com/Airis-DevGroup/airis-ui"
   },
   "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "dev": "concurrently --raw --kill-others --success first \"yarn workspace @airis-ui/vue dev\"",
-    "build": "concurrently --raw --kill-others --success first \"yarn workspace @airis-ui/vue build:lib\""
+    "bootstrap": "lerna bootstrap",
+    "dev": "lerna run --parallel dev",
+    "build": "lerna run --parallel build"
   },
   "devDependencies": {
-    "concurrently": "^5.3.0",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "lerna": "^4.0.0"
   }
 }

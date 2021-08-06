@@ -17,8 +17,8 @@
   ],
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:lib": "vue-cli-service build --target lib --name airis-ui src/components/index.js --mode production",
+    "build": "vue-cli-service build --target lib --name airis-ui src/components/index.js --mode production",
+    "build:docs": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
