@@ -3,6 +3,7 @@ import AirisBaseModal from './modal/BaseModal.vue';
 import AirisModalWrapper from './modal/ModalWrapper.vue';
 import AirisStep from './stepper/Step.vue';
 import AirisStepper from './stepper/Stepper.vue';
+import AirisPhotoPicker from './photo-picker/PhotoPicker.vue';
 
 function install(Vue, { components }) {
   if (components && Array.isArray(components) && components.length > 0) {
@@ -19,6 +20,9 @@ function install(Vue, { components }) {
           Vue.component('airis-step', AirisStep);
           Vue.component('airis-stepper', AirisStepper);
           break;
+        case 'photo-picker':
+          Vue.component('airis-photo-picker', AirisPhotoPicker);
+          break;
       }
     });
   } else {
@@ -27,6 +31,7 @@ function install(Vue, { components }) {
     Vue.component('airis-modal-wrapper', AirisModalWrapper);
     Vue.component('airis-step', AirisStep);
     Vue.component('airis-stepper', AirisStepper);
+    Vue.component('airis-photo-picker', AirisPhotoPicker);
   }
 }
 
@@ -38,4 +43,5 @@ export {
   AirisModalWrapper,
   AirisStep,
   AirisStepper,
+  AirisPhotoPicker,
 };
