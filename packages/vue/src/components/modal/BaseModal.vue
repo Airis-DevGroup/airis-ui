@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     onCancel() {
-      this.$parent.$emit('cancel');
+      this.$parent.CloseModal();
     },
     onAccept() {
       this.$parent.$emit('accept');

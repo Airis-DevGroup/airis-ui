@@ -26,7 +26,11 @@ export default {
   },
   methods: {
     CloseModal() {
-      this.$emit('cancel');
+      this.showBody = false;
+      setTimeout(() => {
+        this.$emit('close');
+        this.$emit('hide');
+      }, 50);
     },
   },
   watch: {
@@ -36,11 +40,6 @@ export default {
           this.$emit('show');
           setTimeout(() => {
             this.showBody = true;
-          }, 50);
-        } else {
-          this.showBody = false;
-          setTimeout(() => {
-            this.$emit('hide');
           }, 50);
         }
       },
@@ -65,7 +64,7 @@ export default {
                 onClick={this.CloseModal}
               ></div>
             )}
-            <transition name="open">
+            <transition name={this.mobile ? 'open-mobile' : 'open'}>
               {this.showBody ? this.$slots.default : null}
             </transition>
           </div>
@@ -89,7 +88,7 @@ export default {
                   onClick={this.CloseModal}
                 ></div>
               )}
-              <transition name="open">
+              <transition name={this.mobile ? 'open-mobile' : 'open'}>
                 {this.showBody ? this.$slots.default : null}
               </transition>
             </div>
@@ -113,25 +112,31 @@ export default {
 }
 
 .open-enter-active,
-.open-leave-active {
+.open-leave-active,
+.open-mobile-enter-active,
+.open-mobile-leave-active {
   transition: all;
   transition-duration: 250ms;
 }
+
 .open-enter,
-.open-leave-active {
+.open-leave-active,
+.open-mobile-enter,
+.open-mobile-leave-active {
   opacity: 0;
 }
 
-@media (min-width: 640px) {
-  .open-enter,
-  .open-leave-active {
-    scale: 0.9;
-  }
+.open-enter,
+.open-leave-active,
+.open-mobile-enter,
+.open-mobile-leave-active {
+  scale: 0.9;
 }
 
 @media (max-width: 640px) {
-  .open-enter,
-  .open-leave-active {
+  .open-mobile-enter,
+  .open-mobile-leave-active {
+    scale: 1;
     transform: translateY(2rem);
   }
 }
