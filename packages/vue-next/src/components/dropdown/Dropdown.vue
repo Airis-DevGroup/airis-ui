@@ -190,12 +190,11 @@ export default defineComponent({
 <style scoped>
 .___dropdown-enter-active,
 .___dropdown-leave-active {
-  transition-property: all;
-  transition-duration: 200ms;
+  @apply transition-all duration-200;
 }
 .___dropdown-enter-from,
 .___dropdown-leave-active {
-  opacity: 0;
+  @apply opacity-0;
   transform: translateY(-5%);
 }
 </style>
@@ -215,62 +214,40 @@ export default defineComponent({
 }
 
 .dropdown-flat-bottom-corners {
-  border-bottom-right-radius: 0rem !important;
-  border-bottom-left-radius: 0rem !important;
+  @apply rounded-b-none !important;
 }
 
 .dropdown-search-input {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-  min-width: 0;
-  width: 100%;
+  @apply outline-none;
+  @apply min-w-0 w-full;
 }
 
 .dropdown-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  @apply w-6 h-6;
 }
 
 .dropdown-chevron {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  @apply transform transition-transform;
 }
 
 .dropdown-rotate-180 {
-  transform: rotate(180deg);
+  @apply rotate-180;
 }
 
 .dropdown-body {
-  position: absolute;
-  width: 100%;
-  border-bottom-right-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  background-color: white;
-  z-index: 10;
-  overflow: hidden;
+  @apply absolute w-full overflow-hidden z-10;
+  @apply rounded-b-lg shadow bg-white;
 }
 
 .dropdown-body-inner {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 15rem;
+  @apply flex flex-col max-h-64;
+  @apply overflow-y-auto overflow-x-hidden;
 }
 
 .dropdown-label,
 .dropdown-search {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  user-select: none;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  outline: none;
-  background-color: white;
-  cursor: pointer;
+  @apply flex items-center justify-between w-full;
+  @apply select-none cursor-pointer outline-none rounded-lg;
+  @apply bg-white py-3 px-4;
 }
 </style>

@@ -64,8 +64,7 @@ export default defineComponent({
 
 <style module>
 .step {
-  width: 100%;
-  height: 100%;
+  @apply h-full w-full;
 }
 </style>
 
