@@ -89,9 +89,9 @@ export default defineComponent({
           </Transition>
         );
       else {
-        if (props.show)
-          return (
-            <Transition name="fade">
+        return (
+          <Transition name="fade">
+            {props.show ? (
               <div
                 class={[
                   style.wrapper,
@@ -116,9 +116,9 @@ export default defineComponent({
                   ) : null}
                 </Transition>
               </div>
-            </Transition>
-          );
-        else return null;
+            ) : null}
+          </Transition>
+        );
       }
     };
   },
