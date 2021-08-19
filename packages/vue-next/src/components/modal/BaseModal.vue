@@ -40,7 +40,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, inject } from 'vue';
 
 import AlertIcon from '@/icons/alert.vue';
@@ -73,14 +73,14 @@ export default defineComponent({
     },
   },
   setup() {
-    const wrapper = inject('ModalWrapper');
+    const { CloseModal } = inject('ModalWrapper') || {};
 
     const onAccept = () => {
-      wrapper.CloseModal('accept');
+      CloseModal('accept');
     };
 
     const onCancel = () => {
-      wrapper.CloseModal('close');
+      CloseModal('close');
     };
 
     return {
