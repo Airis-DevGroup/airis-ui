@@ -80,10 +80,11 @@ export default defineComponent({
                   onClick={() => CloseModal('close')}
                 ></div>
               )}
-              <Transition name={props.mobile ? 'open-mobile' : 'open'}>
-                <div v-show={ShowBody.value} class={style['modal-body']}>
-                  {slots.default ? slots.default() : null}
-                </div>
+              <Transition
+                v-show={ShowBody.value}
+                name={props.mobile ? 'open-mobile' : 'open'}
+              >
+                {slots.default ? slots.default() : null}
               </Transition>
             </div>
           </Transition>
@@ -109,11 +110,7 @@ export default defineComponent({
                   ></div>
                 )}
                 <Transition name={props.mobile ? 'open-mobile' : 'open'}>
-                  {ShowBody.value ? (
-                    <div class={style['modal-body']}>
-                      {slots.default ? slots.default() : null}
-                    </div>
-                  ) : null}
+                  {ShowBody.value && slots.default ? slots.default() : null}
                 </Transition>
               </div>
             ) : null}
@@ -164,6 +161,7 @@ export default defineComponent({
 <style module>
 .cover {
   @apply fixed inset-0;
+  z-index: -1;
 }
 
 .wrapper {
@@ -178,10 +176,6 @@ export default defineComponent({
 
 .overlay {
   @apply bg-black bg-opacity-75;
-}
-
-.modal-body {
-  z-index: 99999;
 }
 
 @media (max-width: 640px) {
