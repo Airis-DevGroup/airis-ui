@@ -3,7 +3,7 @@ export default {
   name: 'ModalWrapper',
   data() {
     return {
-      showBody: false,
+      ShowBody: false,
     };
   },
   props: {
@@ -25,10 +25,10 @@ export default {
     },
   },
   methods: {
-    CloseModal() {
-      this.showBody = false;
+    CloseModal(action = 'close') {
+      this.ShowBody = false;
       setTimeout(() => {
-        this.$emit('close');
+        this.$emit(action);
         this.$emit('hide');
       }, 50);
     },
@@ -39,7 +39,7 @@ export default {
         if (value) {
           this.$emit('show');
           setTimeout(() => {
-            this.showBody = true;
+            this.ShowBody = true;
           }, 50);
         }
       },
@@ -61,19 +61,22 @@ export default {
             {this.$slots.overlay || (
               <div
                 class={[this.$style.cover, this.$style.overlay]}
-                onClick={this.CloseModal}
+                onClick={() => this.CloseModal()}
               ></div>
             )}
-            <transition name={this.mobile ? 'open-mobile' : 'open'}>
-              {this.showBody ? this.$slots.default : null}
+            <transition
+              v-show={this.ShowBody}
+              name={this.mobile ? 'open-mobile' : 'open'}
+            >
+              {this.$slots.default}
             </transition>
           </div>
         </transition>
       );
     else {
-      if (this.show)
-        return (
-          <transition name="fade">
+      return (
+        <transition name="fade">
+          {this.show ? (
             <div
               class={[
                 this.$style.wrapper,
@@ -85,16 +88,16 @@ export default {
               {this.$slots.overlay || (
                 <div
                   class={[this.$style.cover, this.$style.overlay]}
-                  onClick={this.CloseModal}
+                  onClick={() => this.CloseModal()}
                 ></div>
               )}
               <transition name={this.mobile ? 'open-mobile' : 'open'}>
-                {this.showBody ? this.$slots.default : null}
+                {this.ShowBody ? this.$slots.default : null}
               </transition>
             </div>
-          </transition>
-        );
-      else return null;
+          ) : null}
+        </transition>
+      );
     }
   },
 };
@@ -102,15 +105,7 @@ export default {
 
 <style scoped>
 .fade-enter-active,
-.fade-leave-active {
-  transition: all;
-  transition-duration: 250ms;
-}
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
-}
-
+.fade-leave-active,
 .open-enter-active,
 .open-leave-active,
 .open-mobile-enter-active,
@@ -119,6 +114,8 @@ export default {
   transition-duration: 250ms;
 }
 
+.fade-enter,
+.fade-leave-active,
 .open-enter,
 .open-leave-active,
 .open-mobile-enter,
@@ -145,6 +142,7 @@ export default {
 <style module>
 .cover {
   @apply fixed inset-0;
+  z-index: -1;
 }
 
 .wrapper {

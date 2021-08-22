@@ -72,10 +72,10 @@ export default {
   },
   methods: {
     onCancel() {
-      this.$parent.CloseModal();
+      this.$parent.CloseModal('close');
     },
     onAccept() {
-      this.$parent.$emit('accept');
+      this.$parent.CloseModal('accept');
     },
   },
 };
