@@ -13,7 +13,7 @@ export default defineComponent({
   components: {
     Transition,
   },
-  emits: ['accept', 'close', 'hide', 'show'],
+  emits: ['accept', 'cancel', 'close', 'hide', 'show'],
   props: {
     show: {
       type: Boolean,
@@ -37,7 +37,7 @@ export default defineComponent({
 
     const ShowBody = ref(false);
 
-    const CloseModal = (action: 'accept' | 'close' | 'hide' | 'show') => {
+    const CloseModal = (action: 'accept' | 'cancel' | 'close' = 'close') => {
       ShowBody.value = false;
       setTimeout(() => {
         emit(action);
@@ -77,7 +77,7 @@ export default defineComponent({
               ) : (
                 <div
                   class={[style.cover, style.overlay]}
-                  onClick={() => CloseModal('close')}
+                  onClick={() => CloseModal()}
                 ></div>
               )}
               <Transition
@@ -106,7 +106,7 @@ export default defineComponent({
                 ) : (
                   <div
                     class={[style.cover, style.overlay]}
-                    onClick={() => CloseModal('close')}
+                    onClick={() => CloseModal()}
                   ></div>
                 )}
                 <Transition name={props.mobile ? 'open-mobile' : 'open'}>
