@@ -31,6 +31,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    actionRequired: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props, { emit, slots }) {
     const style = useCssModule();
@@ -73,18 +77,18 @@ export default defineComponent({
               ]}
             >
               {slots.overlay ? (
-                slots.overlay()
+                slots.overlay({ CloseModal })
               ) : (
                 <div
                   class={[style.cover, style.overlay]}
-                  onClick={() => CloseModal()}
+                  onClick={() => !props.actionRequired && CloseModal()}
                 ></div>
               )}
               <Transition
                 v-show={ShowBody.value}
                 name={props.mobile ? 'open-mobile' : 'open'}
               >
-                {slots.default ? slots.default() : null}
+                {slots.default ? slots.default({ CloseModal }) : null}
               </Transition>
             </div>
           </Transition>
@@ -102,15 +106,17 @@ export default defineComponent({
                 ]}
               >
                 {slots.overlay ? (
-                  slots.overlay()
+                  slots.overlay({ CloseModal })
                 ) : (
                   <div
                     class={[style.cover, style.overlay]}
-                    onClick={() => CloseModal()}
+                    onClick={() => !props.actionRequired && CloseModal()}
                   ></div>
                 )}
                 <Transition name={props.mobile ? 'open-mobile' : 'open'}>
-                  {ShowBody.value && slots.default ? slots.default() : null}
+                  {ShowBody.value && slots.default
+                    ? slots.default({ CloseModal })
+                    : null}
                 </Transition>
               </div>
             ) : null}

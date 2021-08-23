@@ -23,6 +23,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    actionRequired: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     CloseModal(action = 'close') {
@@ -46,6 +50,7 @@ export default {
     },
   },
   render() {
+    const slots = this.$scopedSlots;
     if (this.keepAlive)
       return (
         <transition name="fade">
@@ -58,17 +63,21 @@ export default {
               this.mobile && this.$style['mobile-enabled'],
             ]}
           >
-            {this.$slots.overlay || (
+            {slots.overlay ? (
+              slots.overlay({ CloseModal: this.CloseModal })
+            ) : (
               <div
                 class={[this.$style.cover, this.$style.overlay]}
-                onClick={() => this.CloseModal()}
+                onClick={() => !this.actionRequired && this.CloseModal()}
               ></div>
             )}
             <transition
               v-show={this.ShowBody}
               name={this.mobile ? 'open-mobile' : 'open'}
             >
-              {this.$slots.default}
+              {slots.default
+                ? slots.default({ CloseModal: this.CloseModal })
+                : null}
             </transition>
           </div>
         </transition>
@@ -85,14 +94,18 @@ export default {
                 this.mobile && this.$style['mobile-enabled'],
               ]}
             >
-              {this.$slots.overlay || (
+              {slots.overlay ? (
+                slots.overlay({ CloseModal: this.CloseModal })
+              ) : (
                 <div
                   class={[this.$style.cover, this.$style.overlay]}
-                  onClick={() => this.CloseModal()}
+                  onClick={() => !this.actionRequired && this.CloseModal()}
                 ></div>
               )}
               <transition name={this.mobile ? 'open-mobile' : 'open'}>
-                {this.ShowBody ? this.$slots.default : null}
+                {this.ShowBody && slots.default
+                  ? slots.default({ CloseModal: this.CloseModal })
+                  : null}
               </transition>
             </div>
           ) : null}
