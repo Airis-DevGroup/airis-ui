@@ -25,6 +25,21 @@ export default {
       type: Boolean,
       default: false,
     },
+    rounded: {
+      type: [Boolean, String],
+      default: false,
+      validator: (value) => {
+        if (typeof value == 'boolean') return true;
+        else {
+          const allowed = ['sm', 'md', 'lg', 'xl', '2xl'];
+          if (allowed.includes(value)) return true;
+          else {
+            console.error('@airis-ui/dropdown: Rounded level not allowed');
+            return false;
+          }
+        }
+      },
+    },
   },
   computed: {
     Label() {
@@ -44,6 +59,13 @@ export default {
         'margin-top': labelHeight * 0.9 + 'px',
         'padding-top': labelHeight * 0.1 + 'px',
       };
+    },
+    roundedLevel() {
+      if (typeof this.rounded == 'string') return this.rounded;
+      else {
+        if (this.rounded) return 'lg';
+        else return 'none';
+      }
     },
   },
   data() {
@@ -89,7 +111,10 @@ export default {
 
 <template>
   <button
-    :class="$style['dropdown-group']"
+    :class="[
+      $style['dropdown-group'],
+      $style[`dropdown-rounded-${roundedLevel}`],
+    ]"
     ref="dropdownGroup"
     @blur="onBlur"
     @wheel="onWheel"
@@ -171,6 +196,60 @@ export default {
 </style>
 
 <style module>
+.dropdown-rounded-none .dropdown-top,
+.dropdown-rounded-none .dropdown-label,
+.dropdown-rounded-none .dropdown-search {
+  @apply rounded-none;
+}
+.dropdown-rounded-none .dropdown-body {
+  @apply rounded-b-none;
+}
+
+.dropdown-rounded-sm .dropdown-top,
+.dropdown-rounded-sm .dropdown-label,
+.dropdown-rounded-sm .dropdown-search {
+  @apply rounded-sm;
+}
+.dropdown-rounded-sm .dropdown-body {
+  @apply rounded-b-sm;
+}
+
+.dropdown-rounded-md .dropdown-top,
+.dropdown-rounded-md .dropdown-label,
+.dropdown-rounded-md .dropdown-search {
+  @apply rounded;
+}
+.dropdown-rounded-md .dropdown-body {
+  @apply rounded-b;
+}
+
+.dropdown-rounded-lg .dropdown-top,
+.dropdown-rounded-lg .dropdown-label,
+.dropdown-rounded-lg .dropdown-search {
+  @apply rounded-lg;
+}
+.dropdown-rounded-lg .dropdown-body {
+  @apply rounded-b-lg;
+}
+
+.dropdown-rounded-xl .dropdown-top,
+.dropdown-rounded-xl .dropdown-label,
+.dropdown-rounded-xl .dropdown-search {
+  @apply rounded-xl;
+}
+.dropdown-rounded-xl .dropdown-body {
+  @apply rounded-b-xl;
+}
+
+.dropdown-rounded-2xl .dropdown-top,
+.dropdown-rounded-2xl .dropdown-label,
+.dropdown-rounded-2xl .dropdown-search {
+  @apply rounded-2xl;
+}
+.dropdown-rounded-2xl .dropdown-body {
+  @apply rounded-b-2xl;
+}
+
 .dropdown-group {
   @apply relative;
   @apply flex flex-col;
@@ -207,7 +286,7 @@ export default {
 
 .dropdown-body {
   @apply absolute w-full overflow-hidden z-10;
-  @apply rounded-b-lg shadow bg-white;
+  @apply shadow bg-white;
 }
 
 .dropdown-body-inner {
