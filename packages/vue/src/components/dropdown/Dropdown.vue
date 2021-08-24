@@ -53,17 +53,6 @@ export default {
     };
   },
   methods: {
-    toggleOpen(e) {
-      const dropdownGroup = this.$refs.dropdownGroup;
-      const dropdownLabel = this.$refs.dropdownLabel;
-
-      const checkParent = (element) =>
-        e.target.parentElement != element &&
-        e.target.parentElement.parentElement != element;
-      if (checkParent(dropdownGroup) && checkParent(dropdownLabel)) {
-        this.isOpen = !this.isOpen;
-      }
-    },
     onLabelClick() {
       if (this.searchable) this.$refs.dropdownSearchInput.focus();
       else if (this.$refs.dropdownLabel) this.$refs.dropdownLabel.focus();
@@ -77,18 +66,34 @@ export default {
       this.searchText = '';
       this.$emit('input', value);
     },
+    onBlur() {
+      this.$emit('blur');
+      this.isOpen = !this.isOpen;
+    },
+    onWheel(e) {
+      let direction;
+      if (e.deltaY > 0) direction = 'down';
+      else direction = 'up';
+
+      this.$emit('wheel', direction);
+    },
   },
   watch: {
     isOpen: function (value) {
-      if (value) document.body.addEventListener('click', this.toggleOpen);
-      else document.body.removeEventListener('click', this.toggleOpen);
+      this.$emit('toggle');
+      this.$emit(value ? 'open' : 'close');
     },
   },
 };
 </script>
 
 <template>
-  <div :class="$style['dropdown-group']" ref="dropdownGroup">
+  <button
+    :class="$style['dropdown-group']"
+    ref="dropdownGroup"
+    @blur="onBlur"
+    @wheel="onWheel"
+  >
     <slot
       name="input"
       :toggle="onLabelClick"
@@ -150,7 +155,7 @@ export default {
         </div>
       </div>
     </transition>
-  </div>
+  </button>
 </template>
 
 <style scoped>
