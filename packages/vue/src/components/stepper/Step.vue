@@ -28,13 +28,13 @@ export default {
         </transition>
       );
     } else {
-      if (this.isCurrent)
         return (
           <transition name="step">
+          {this.isCurrent ? (
             <div class={this.$style.step}>{this.$slots.default}</div>
+          ) : null}
           </transition>
         );
-      else return null;
     }
   },
 };
