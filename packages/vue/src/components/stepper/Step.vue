@@ -28,13 +28,13 @@ export default {
         </transition>
       );
     } else {
-        return (
-          <transition name="step">
+      return (
+        <transition name="step">
           {this.isCurrent ? (
             <div class={this.$style.step}>{this.$slots.default}</div>
           ) : null}
-          </transition>
-        );
+        </transition>
+      );
     }
   },
 };
@@ -56,14 +56,14 @@ export default {
 
 .step-enter,
 .step-leave-active {
-  opacity: 0;
+  @apply opacity-0;
 }
 
 .step-enter {
   transform: translateX(var(--___stepper_forward));
 }
 .step-leave-active {
-  position: absolute;
+  @apply absolute;
   transform: translateX(var(--___stepper_backward));
 }
 </style>

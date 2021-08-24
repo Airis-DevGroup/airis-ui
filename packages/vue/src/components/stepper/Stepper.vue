@@ -178,17 +178,11 @@ export default {
 
 <style module>
 .action {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
+  @apply bg-none border-none p-0 cursor-pointer;
 }
 
 .stepper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @apply flex flex-col justify-between;
 }
 
 .progress-bar {
@@ -200,44 +194,30 @@ export default {
 }
 
 .steps-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
+  @apply relative;
+  @apply flex flex-grow justify-center;
 }
 
 .controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 2.5rem;
+  @apply py-8 px-10;
+  @apply flex justify-between items-center;
 }
 
 .action {
-  transition: all;
-  transition-duration: 150ms;
-  width: 8rem;
-  height: 3rem;
-  cursor: pointer;
-  background-color: white;
-  border-width: 1px;
-  border-color: #e5e7eb;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  outline: none;
+  @apply w-32 h-12;
+  @apply transition-all cursor-pointer;
+  @apply bg-white border rounded-lg shadow outline-none;
   -webkit-tap-highlight-color: transparent;
 }
 
 .finish-action {
-  color: white;
+  @apply text-white;
   background-color: rgb(34, 34, 34);
 }
 
 .disabled-action {
   color: rgb(155, 155, 155);
   background-color: rgb(241, 241, 241);
-  box-shadow: none;
-  border: none;
-  cursor: default;
+  @apply shadow-none border-none cursor-default;
 }
 </style>
