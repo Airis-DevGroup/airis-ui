@@ -86,6 +86,7 @@ export default {
     },
     onSelect(value) {
       this.searchText = '';
+      if (!this.searchable) this.isOpen = !this.isOpen;
       this.$emit('input', value);
     },
     onBlur() {
@@ -116,7 +117,7 @@ export default {
       $style[`dropdown-rounded-${roundedLevel}`],
     ]"
     ref="dropdownGroup"
-    @blur="onBlur"
+    @blur="!searchable && onBlur"
     @wheel="onWheel"
   >
     <slot
@@ -144,11 +145,12 @@ export default {
               ref="dropdownSearchInput"
               type="text"
               :value="searchText"
-              @input="(e) => onSearch(e.target.value)"
               :placeholder="Label"
+              @input="(e) => onSearch(e.target.value)"
+              @blur="onBlur"
             />
           </slot>
-          <SearchIcon :class="style['dropdown-icon']" />
+          <SearchIcon :class="$style['dropdown-icon']" />
         </div>
         <div
           v-else
@@ -268,7 +270,7 @@ export default {
 }
 
 .dropdown-search-input {
-  @apply outline-none;
+  @apply outline-none focus:outline-none;
   @apply min-w-0 w-full;
 }
 
