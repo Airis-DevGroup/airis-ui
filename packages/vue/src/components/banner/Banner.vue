@@ -1,6 +1,6 @@
 <template>
   <transition name="___banner-fade">
-    <div v-if="show" :class="$style['banner-container']">
+    <div v-if="isShown" :class="$style['banner-container']">
       <div
         :class="[
           classes,
@@ -44,10 +44,14 @@ export default {
   name: 'Banner',
   data() {
     return {
-      show: true,
+      showBanner: false,
     };
   },
   props: {
+    show: {
+      type: Boolean,
+      default: false,
+    },
     title: {
       type: String,
       default: '',
@@ -77,28 +81,49 @@ export default {
           const allowed = ['sm', 'md', 'lg', 'xl', '2xl'];
           if (allowed.includes(value)) return true;
           else {
-            console.error('@airis-ui/dropdown: Rounded level not allowed');
+            console.error('@airis-ui/banner: Rounded level not allowed');
             return false;
           }
         }
       },
     },
   },
+  mounted() {
+    if (this.show) this.showBanner = true;
+  },
   methods: {
     onCancel() {
-      this.show = false;
+      this.$emit('cancel');
+      this.showBanner = false;
     },
     onAccept() {
-      this.show = false;
+      this.$emit('accept');
+      this.showBanner = false;
     },
   },
   computed: {
+    isShown() {
+      return this.showBanner && this.show;
+    },
     roundedLevel() {
       if (typeof this.rounded == 'string') return this.rounded;
       else {
         if (this.rounded) return 'lg';
         else return 'none';
       }
+    },
+  },
+  watch: {
+    show: {
+      handler(value) {
+        if (value) this.showBanner = true;
+        else this.showBanner = false;
+      },
+    },
+    showBanner: {
+      handler(value) {
+        this.$emit(value ? 'open' : 'close');
+      },
     },
   },
 };
@@ -169,6 +194,6 @@ export default {
 .___banner-fade-enter,
 .___banner-fade-leave-to {
   @apply opacity-0;
-  @apply transform translate-y-1.5;
+  transform: translateY(var(--banner-direction));
 }
 </style>
