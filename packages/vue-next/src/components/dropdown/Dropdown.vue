@@ -71,21 +71,6 @@ export default defineComponent({
     };
 
     const methods = {
-      toggleOpen(e: Event) {
-        const checkParent = (element: HTMLElement | null) => {
-          const target = e.target as HTMLElement;
-          return (
-            target.parentElement != element &&
-            target.parentElement?.parentElement != element
-          );
-        };
-        if (
-          checkParent(dropdownGroup.value) &&
-          checkParent(dropdownLabel.value)
-        ) {
-          state.isOpen = !state.isOpen;
-        }
-      },
       onLabelClick() {
         if (props.searchable) dropdownSearchInput.value?.focus();
         else if (dropdownLabel.value) dropdownLabel.value?.focus();
@@ -97,19 +82,21 @@ export default defineComponent({
       },
       onSelect(value: unknown) {
         state.searchText = '';
+        if (!props.searchable) state.isOpen = false;
         emit('update:modelValue', value);
         emit('change', value);
+      },
+      onBlur() {
+        emit('blur');
+        state.isOpen = false;
+      },
+      onWheel(e: WheelEvent) {
+        emit('scroll', e.deltaY > 0 ? 'down' : 'up');
       },
     };
 
     watchEffect(() => {
-      if (state.isOpen) {
-        document.body.addEventListener('click', methods.toggleOpen);
-        emit('show');
-      } else {
-        document.body.removeEventListener('click', methods.toggleOpen);
-        emit('hide');
-      }
+      emit(state.isOpen ? 'open' : 'close');
     });
 
     return {
@@ -126,7 +113,12 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="style['dropdown-group']" ref="dropdownGroup">
+  <button
+    :class="style['dropdown-group']"
+    ref="dropdownGroup"
+    @blur="!searchable && onBlur()"
+    @wheel="onWheel"
+  >
     <slot
       name="input"
       :toggle="onLabelClick"
@@ -152,8 +144,9 @@ export default defineComponent({
               ref="dropdownSearchInput"
               type="text"
               :value="searchText"
-              @input="(e) => onSearch(e.target.value)"
               :placeholder="Label"
+              @input="(e) => onSearch(e.target.value)"
+              @blur="onBlur"
             />
           </slot>
           <SearchIcon :class="style['dropdown-icon']" />
@@ -184,7 +177,7 @@ export default defineComponent({
         </div>
       </div>
     </transition>
-  </div>
+  </button>
 </template>
 
 <style scoped>
@@ -218,7 +211,7 @@ export default defineComponent({
 }
 
 .dropdown-search-input {
-  @apply outline-none;
+  @apply outline-none focus:outline-none;
   @apply min-w-0 w-full;
 }
 

@@ -86,24 +86,20 @@ export default {
     },
     onSelect(value) {
       this.searchText = '';
-      if (!this.searchable) this.isOpen = !this.isOpen;
+      if (!this.searchable) this.isOpen = false;
       this.$emit('input', value);
+      this.$emit('change', value);
     },
     onBlur() {
       this.$emit('blur');
-      this.isOpen = !this.isOpen;
+      this.isOpen = false;
     },
     onWheel(e) {
-      let direction;
-      if (e.deltaY > 0) direction = 'down';
-      else direction = 'up';
-
-      this.$emit('wheel', direction);
+      this.$emit('scroll', e.deltaY > 0 ? 'down' : 'up');
     },
   },
   watch: {
     isOpen: function (value) {
-      this.$emit('toggle');
       this.$emit(value ? 'open' : 'close');
     },
   },
