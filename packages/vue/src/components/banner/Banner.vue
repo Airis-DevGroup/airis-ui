@@ -1,6 +1,12 @@
 <template>
-  <transition name="___banner-fade">
-    <div v-if="isShown" :class="$style['banner-container']">
+  <transition :name="top ? '___banner-top-fade' : '___banner-bottom-fade'">
+    <div
+      v-if="isShown"
+      :class="[
+        $style['banner-container'],
+        top ? $style['banner-top'] : $style['banner-bottom'],
+      ]"
+    >
       <div
         :class="[
           classes,
@@ -49,6 +55,10 @@ export default {
   },
   props: {
     show: {
+      type: Boolean,
+      default: false,
+    },
+    top: {
       type: Boolean,
       default: false,
     },
@@ -131,15 +141,28 @@ export default {
 
 <style module>
 .banner-container {
-  @apply absolute bottom-0 left-0 right-0;
+  @apply absolute left-0 right-0;
+  z-index: 99999;
+}
+
+.banner-top {
+  @apply top-0;
+}
+.banner-top .banner {
+  @apply mt-10;
+}
+
+.banner-bottom {
+  @apply bottom-0;
+}
+.banner-bottom .banner {
+  @apply mb-10;
 }
 
 .banner {
   @apply flex justify-between items-center;
-  @apply max-w-3xl;
-  @apply shadow-lg;
-  @apply mb-10 mx-auto;
-  @apply p-5;
+  @apply max-w-3xl mx-auto p-5;
+  @apply bg-white shadow-lg;
 }
 
 .banner-rounded-none {
@@ -186,14 +209,27 @@ export default {
 </style>
 
 <style scoped>
-.___banner-fade-enter-active,
-.___banner-fade-leave-active {
+.___banner-bottom-fade-enter-active,
+.___banner-bottom-fade-leave-active,
+.___banner-top-fade-enter-active,
+.___banner-top-fade-leave-active {
   @apply transition-all duration-200;
 }
 
-.___banner-fade-enter,
-.___banner-fade-leave-to {
-  @apply opacity-0;
-  transform: translateY(var(--banner-direction));
+.___banner-bottom-fade-enter,
+.___banner-bottom-fade-leave-active,
+.___banner-top-fade-enter,
+.___banner-top-fade-leave-active {
+  @apply opacity-0 transform;
+}
+
+.___banner-bottom-fade-enter,
+.___banner-bottom-fade-leave-active {
+  @apply translate-y-1.5;
+}
+
+.___banner-top-fade-enter,
+.___banner-top-fade-leave-active {
+  @apply -translate-y-1.5;
 }
 </style>
