@@ -1,3 +1,4 @@
+import AirisBanner from './banner/Banner.vue';
 import AirisDropdown from './dropdown/Dropdown.vue';
 import AirisBaseModal from './modal/BaseModal.vue';
 import AirisModalWrapper from './modal/ModalWrapper.vue';
@@ -9,6 +10,9 @@ function install(Vue, { components }) {
   if (components && Array.isArray(components) && components.length > 0) {
     components.forEach((component) => {
       switch (component) {
+        case 'banner':
+          Vue.component('airis-banner', AirisBanner);
+          break;
         case 'dropdown':
           Vue.component('airis-dropdown', AirisDropdown);
           break;
@@ -26,6 +30,7 @@ function install(Vue, { components }) {
       }
     });
   } else {
+    Vue.component('airis-banner', AirisBanner);
     Vue.component('airis-dropdown', AirisDropdown);
     Vue.component('airis-base-modal', AirisBaseModal);
     Vue.component('airis-modal-wrapper', AirisModalWrapper);
@@ -38,6 +43,7 @@ function install(Vue, { components }) {
 export default { install };
 
 export {
+  AirisBanner,
   AirisDropdown,
   AirisBaseModal,
   AirisModalWrapper,
