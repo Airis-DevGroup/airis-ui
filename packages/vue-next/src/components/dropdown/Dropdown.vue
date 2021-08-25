@@ -42,7 +42,7 @@ export default defineComponent({
       validator: (value: boolean | string) => {
         if (typeof value == 'boolean') return true;
         else {
-          const allowed = ['sm', 'md', 'lg', 'xl', '2xl'];
+          const allowed = ['sm', 'md', 'lg', 'xl', '2xl', 'full'];
           if (allowed.includes(value)) return true;
           else {
             console.error('@airis-ui/dropdown: Rounded level not allowed');
@@ -79,8 +79,10 @@ export default defineComponent({
       bodyStyle: computed(() => {
         const labelHeight = dropdownGroup.value?.clientHeight || 0;
         return {
-          'margin-top': labelHeight * 0.9 + 'px',
-          'padding-top': labelHeight * 0.1 + 'px',
+          'margin-top':
+            labelHeight * (props.rounded == 'full' ? 1.13 : 0.9) + 'px',
+          'padding-top':
+            labelHeight * (props.rounded == 'full' ? 0 : 0.1) + 'px',
         };
       }),
       roundedLevel: computed(() => {
@@ -153,7 +155,7 @@ export default defineComponent({
       <div
         :class="[
           style['dropdown-top'],
-          isOpen && style['dropdown-flat-bottom-corners'],
+          isOpen && rounded != 'full' && style['dropdown-flat-bottom-corners'],
         ]"
         ref="dropdownLabel"
         @click="onLabelClick"
@@ -270,6 +272,15 @@ export default defineComponent({
 }
 .dropdown-rounded-2xl .dropdown-body {
   @apply rounded-b-2xl;
+}
+
+.dropdown-rounded-full .dropdown-top,
+.dropdown-rounded-full .dropdown-label,
+.dropdown-rounded-full .dropdown-search {
+  @apply rounded-full;
+}
+.dropdown-rounded-full .dropdown-body {
+  @apply rounded-xl;
 }
 
 .dropdown-group {
