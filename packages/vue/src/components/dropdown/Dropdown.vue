@@ -119,6 +119,7 @@ export default {
   >
     <slot
       name="input"
+      :isOpen="isOpen"
       :toggle="onLabelClick"
       :onSearch="onSearch"
       :label="Label"

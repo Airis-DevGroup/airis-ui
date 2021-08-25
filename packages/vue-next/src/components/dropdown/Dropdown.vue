@@ -148,6 +148,7 @@ export default defineComponent({
   >
     <slot
       name="input"
+      :isOpen="isOpen"
       :toggle="onLabelClick"
       :onSearch="onSearch"
       :label="Label"
@@ -330,7 +331,7 @@ export default defineComponent({
 .dropdown-label,
 .dropdown-search {
   @apply flex items-center justify-between w-full;
-  @apply select-none cursor-pointer outline-none rounded-lg;
+  @apply select-none cursor-pointer outline-none;
   @apply bg-white py-3 px-4;
 }
 </style>
