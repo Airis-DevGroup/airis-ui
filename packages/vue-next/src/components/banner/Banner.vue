@@ -3,15 +3,15 @@
     <div
       v-if="isShown"
       :class="[
-        $style['banner-container'],
-        top ? $style['banner-top'] : $style['banner-bottom'],
+        style['banner-container'],
+        top ? style['banner-top'] : style['banner-bottom'],
       ]"
     >
       <div
         :class="[
           classes,
-          $style.banner,
-          $style[`banner-rounded-${roundedLevel}`],
+          style.banner,
+          style[`banner-rounded-${roundedLevel}`],
         ]"
       >
         <slot>
@@ -26,7 +26,7 @@
               v-if="accept"
               @click="onAccept"
               type="button"
-              :class="[$style.action, $style['action-accept']]"
+              :class="[style.action, style['action-accept']]"
             >
               {{ typeof accept == 'string' ? accept : 'Accept' }}
             </button>
@@ -34,7 +34,7 @@
               v-if="cancel"
               @click="onCancel"
               type="button"
-              :class="[$style.action, $style['action-cancel']]"
+              :class="[style.action, style['action-cancel']]"
             >
               {{ typeof cancel == 'string' ? cancel : 'Cancel' }}
             </button>
@@ -45,14 +45,18 @@
   </transition>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  useCssModule,
+  watch,
+} from 'vue';
+
+export default defineComponent({
   name: 'Banner',
-  data() {
-    return {
-      showBanner: false,
-    };
-  },
   props: {
     show: {
       type: Boolean,
@@ -85,7 +89,7 @@ export default {
     rounded: {
       type: [Boolean, String],
       default: false,
-      validator: (value) => {
+      validator: (value: boolean | string) => {
         if (typeof value == 'boolean') return true;
         else {
           const allowed = ['sm', 'md', 'lg', 'xl', '2xl'];
@@ -98,44 +102,60 @@ export default {
       },
     },
   },
-  mounted() {
-    if (this.show) this.showBanner = true;
-  },
-  methods: {
-    onCancel() {
-      this.$emit('cancel');
-      this.showBanner = false;
-    },
-    onAccept() {
-      this.$emit('accept');
-      this.showBanner = false;
-    },
-  },
-  computed: {
-    isShown() {
-      return this.showBanner && this.show;
-    },
-    roundedLevel() {
-      if (typeof this.rounded == 'string') return this.rounded;
-      else {
-        if (this.rounded) return 'lg';
-        else return 'none';
-      }
-    },
-  },
-  watch: {
-    show: {
-      handler(value) {
-        this.showBanner = value;
+  setup(props, { emit }) {
+    const style = useCssModule();
+
+    const showBanner = ref(false);
+
+    onMounted(() => {
+      if (props.show) showBanner.value = true;
+    });
+
+    const methods = {
+      onCancel() {
+        emit('cancel');
+        showBanner.value = false;
       },
-    },
-    showBanner: {
-      handler(value) {
-        this.$emit(value ? 'open' : 'close');
+      onAccept() {
+        emit('accept');
+        showBanner.value = false;
       },
-    },
+    };
+
+    const getters = {
+      isShown: computed(() => {
+        return showBanner.value && props.show;
+      }),
+      roundedLevel: computed(() => {
+        if (typeof props.rounded == 'string') return props.rounded;
+        else {
+          if (props.rounded) return 'lg';
+          else return 'none';
+        }
+      }),
+    };
+
+    watch(
+      () => props.show,
+      (value) => {
+        showBanner.value = value;
+      },
+    );
+
+    watch(
+      () => showBanner.value,
+      (value) => {
+        emit(value ? 'open' : 'close');
+      },
+    );
+
+    return {
+      style,
+      ...getters,
+      ...methods,
+    };
   },
-};
+});
 </script>
 
 <style module>

@@ -1,5 +1,6 @@
 import { App } from 'vue';
 
+import AirisBanner from './banner/Banner.vue';
 import AirisDropdown from './dropdown/Dropdown.vue';
 import AirisBaseModal from './modal/BaseModal.vue';
 import AirisModalWrapper from './modal/ModalWrapper.vue';
@@ -8,13 +9,16 @@ import AirisStepper from './stepper/Stepper.vue';
 import AirisPhotoPicker from './photo-picker/PhotoPicker.vue';
 
 interface AirisUiOptions {
-  components?: ['dropdown' | 'modal' | 'stepper' | 'photo-picker'];
+  components?: ['banner' | 'dropdown' | 'modal' | 'stepper' | 'photo-picker'];
 }
 
 function install(app: App, { components }: AirisUiOptions): void {
   if (components && Array.isArray(components) && components.length > 0) {
     components.forEach((component) => {
       switch (component) {
+        case 'banner':
+          app.component('airis-banner', AirisBanner);
+          break;
         case 'dropdown':
           app.component('airis-dropdown', AirisDropdown);
           break;
@@ -32,6 +36,7 @@ function install(app: App, { components }: AirisUiOptions): void {
       }
     });
   } else {
+    app.component('airis-banner', AirisBanner);
     app.component('airis-dropdown', AirisDropdown);
     app.component('airis-base-modal', AirisBaseModal);
     app.component('airis-modal-wrapper', AirisModalWrapper);
@@ -44,6 +49,7 @@ function install(app: App, { components }: AirisUiOptions): void {
 export default { install };
 
 export {
+  AirisBanner,
   AirisDropdown,
   AirisBaseModal,
   AirisModalWrapper,
