@@ -21,7 +21,7 @@
           </div>
         </slot>
         <slot name="actions" :accept="onAccept" :cancel="onCancel">
-          <div>
+          <div :class="$style['actions-wrapper']">
             <button
               v-if="accept"
               @click="onAccept"
@@ -140,7 +140,7 @@ export default {
 
 <style module>
 .banner-container {
-  @apply absolute left-0 right-0;
+  @apply fixed px-4 left-0 right-0;
   z-index: 99999;
 }
 
@@ -159,7 +159,7 @@ export default {
 }
 
 .banner {
-  @apply flex justify-between items-center;
+  @apply flex flex-col sm:flex-row justify-between items-center;
   @apply max-w-3xl mx-auto p-5;
   @apply bg-white shadow-lg;
 }
@@ -186,6 +186,11 @@ export default {
 
 .banner-rounded-2xl {
   @apply rounded-2xl;
+}
+
+.actions-wrapper {
+  @apply sm:flex sm:flex-row-reverse;
+  @apply w-full sm:w-auto mt-1 sm:mt-0 sm:ml-5;
 }
 
 .action {
