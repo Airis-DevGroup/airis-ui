@@ -23,6 +23,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    sheet: {
+      type: Boolean,
+      default: false,
+    },
     actionRequired: {
       type: Boolean,
       default: false,
@@ -34,7 +38,7 @@ export default {
       setTimeout(() => {
         this.$emit(action);
         this.$emit('hide');
-      }, 50);
+      }, 75);
     },
   },
   watch: {
@@ -44,7 +48,7 @@ export default {
           this.$emit('show');
           setTimeout(() => {
             this.ShowBody = true;
-          }, 50);
+          }, 75);
         }
       },
     },
@@ -61,6 +65,7 @@ export default {
               this.$style.cover,
               !this.fullscreen && this.$style.padding,
               this.mobile && this.$style['mobile-enabled'],
+              this.sheet && this.$style.sheet,
             ]}
           >
             {slots.overlay ? (
@@ -72,12 +77,17 @@ export default {
               ></div>
             )}
             <transition
-              v-show={this.ShowBody}
-              name={this.mobile ? 'open-mobile' : 'open'}
+              name={this.sheet ? 'sheet' : this.mobile ? 'open-mobile' : 'open'}
             >
-              {slots.default
-                ? slots.default({ CloseModal: this.CloseModal })
-                : null}
+              <div
+                v-show={this.ShowBody}
+                class={this.$style.fullscreen}
+                vOn:click_self={() => !this.actionRequired && this.CloseModal()}
+              >
+                {slots.default
+                  ? slots.default({ CloseModal: this.CloseModal })
+                  : null}
+              </div>
             </transition>
           </div>
         </transition>
@@ -92,6 +102,7 @@ export default {
                 this.$style.cover,
                 !this.fullscreen && this.$style.padding,
                 this.mobile && this.$style['mobile-enabled'],
+                this.sheet && this.$style.sheet,
               ]}
             >
               {slots.overlay ? (
@@ -102,10 +113,23 @@ export default {
                   onClick={() => !this.actionRequired && this.CloseModal()}
                 ></div>
               )}
-              <transition name={this.mobile ? 'open-mobile' : 'open'}>
-                {this.ShowBody && slots.default
-                  ? slots.default({ CloseModal: this.CloseModal })
-                  : null}
+              <transition
+                name={
+                  this.sheet ? 'sheet' : this.mobile ? 'open-mobile' : 'open'
+                }
+              >
+                {this.ShowBody ? (
+                  <div
+                    class={this.$style.fullscreen}
+                    vOn:click_self={() =>
+                      !this.actionRequired && this.CloseModal()
+                    }
+                  >
+                    {slots.default
+                      ? slots.default({ CloseModal: this.CloseModal })
+                      : null}
+                  </div>
+                ) : null}
               </transition>
             </div>
           ) : null}
@@ -122,7 +146,9 @@ export default {
 .open-enter-active,
 .open-leave-active,
 .open-mobile-enter-active,
-.open-mobile-leave-active {
+.open-mobile-leave-active,
+.sheet-enter-active,
+.sheet-leave-active {
   transition: all;
   transition-duration: 250ms;
 }
@@ -132,8 +158,15 @@ export default {
 .open-enter,
 .open-leave-active,
 .open-mobile-enter,
-.open-mobile-leave-active {
+.open-mobile-leave-active,
+.sheet-enter,
+.sheet-leave-active {
   opacity: 0;
+}
+
+.sheet-enter,
+.sheet-leave-active {
+  transform: translateY(100%);
 }
 
 .open-enter,
@@ -155,13 +188,13 @@ export default {
 <style module>
 .cover {
   @apply fixed inset-0;
-  z-index: -1;
+  z-index: 99999;
 }
 
 .wrapper {
+  @apply w-full h-full;
   @apply flex flex-col;
   @apply items-center justify-center;
-  z-index: 99999;
 }
 
 .padding {
@@ -170,6 +203,18 @@ export default {
 
 .overlay {
   @apply bg-black bg-opacity-75;
+  z-index: -1;
+}
+
+.fullscreen {
+  @apply w-full;
+  @apply flex flex-col;
+  @apply items-center justify-center;
+}
+
+.sheet {
+  @apply pb-0;
+  @apply justify-end;
 }
 
 @media (max-width: 640px) {
