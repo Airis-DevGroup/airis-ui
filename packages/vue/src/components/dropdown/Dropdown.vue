@@ -76,10 +76,13 @@ export default {
     };
   },
   methods: {
-    onLabelClick() {
-      if (this.searchable) this.$refs.dropdownSearchInput.focus();
-      else if (this.$refs.dropdownLabel) this.$refs.dropdownLabel.focus();
-      this.isOpen = !this.isOpen;
+    Toggle(value = null) {
+      if (value === true || this.isOpen === false) {
+        if (this.searchable) this.$refs.dropdownSearchInput.focus();
+        else if (this.$refs.dropdownLabel) this.$refs.dropdownLabel.focus();
+      }
+      this.isOpen =
+        value != null && typeof value == 'boolean' ? value : !this.isOpen;
     },
     onSearch(search) {
       this.searchText = search;
@@ -120,7 +123,7 @@ export default {
     <slot
       name="input"
       :isOpen="isOpen"
-      :toggle="onLabelClick"
+      :toggle="Toggle"
       :onSearch="onSearch"
       :label="Label"
     >
@@ -130,7 +133,7 @@ export default {
           isOpen && rounded != 'full' && $style['dropdown-flat-bottom-corners'],
         ]"
         ref="dropdownLabel"
-        @click="onLabelClick"
+        @click="Toggle"
       >
         <div
           :class="$style['dropdown-search']"
