@@ -10,8 +10,15 @@ import {
   toRefs,
 } from 'vue';
 
+import ChevronIcon from '@/icons/chevron.vue';
+import SearchIcon from '@/icons/search.vue';
+
 export default defineComponent({
   name: 'Dropdown',
+  components: {
+    ChevronIcon,
+    SearchIcon,
+  },
   props: {
     modelValue: {
       type: Object,
@@ -170,43 +177,19 @@ export default defineComponent({
               @blur="onBlur"
             />
           </slot>
-          <svg
-            :class="style['dropdown-icon']"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
+          <SearchIcon :class="style['dropdown-icon']" />
         </div>
         <div v-else :class="style['dropdown-label']" ref="dropdownDefaultLabel">
           <slot name="label" :label="Label">
             <p>{{ Label }}</p>
           </slot>
-          <svg
+          <ChevronIcon
             :class="[
               style['dropdown-icon'],
               style['dropdown-chevron'],
               isOpen && style['dropdown-rotate-180'],
             ]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
+          />
         </div>
       </div>
     </slot>
