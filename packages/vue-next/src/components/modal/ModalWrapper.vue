@@ -6,6 +6,7 @@ import {
   watchEffect,
   Transition,
   provide,
+  withModifiers,
 } from 'vue';
 
 export default defineComponent({
@@ -31,6 +32,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    sheet: {
+      type: Boolean,
+      default: false,
+    },
     actionRequired: {
       type: Boolean,
       default: false,
@@ -46,7 +51,7 @@ export default defineComponent({
       setTimeout(() => {
         emit(action);
         emit('hide');
-      }, 50);
+      }, 75);
     };
 
     watchEffect(() => {
@@ -54,7 +59,7 @@ export default defineComponent({
         emit('show');
         setTimeout(() => {
           ShowBody.value = true;
-        }, 50);
+        }, 75);
       }
     });
 
@@ -74,6 +79,7 @@ export default defineComponent({
                 style.cover,
                 !props.fullscreen && style.padding,
                 props.mobile && style['mobile-enabled'],
+                props.sheet && style.sheet,
               ]}
             >
               {slots.overlay ? (
@@ -85,10 +91,20 @@ export default defineComponent({
                 ></div>
               )}
               <Transition
-                v-show={ShowBody.value}
-                name={props.mobile ? 'open-mobile' : 'open'}
+                name={
+                  props.sheet ? 'sheet' : props.mobile ? 'open-mobile' : 'open'
+                }
               >
-                {slots.default ? slots.default({ CloseModal }) : null}
+                <div
+                  v-show={ShowBody.value}
+                  class={style.fullscreen}
+                  onClick={withModifiers(
+                    () => !props.actionRequired && CloseModal(),
+                    ['self'],
+                  )}
+                >
+                  {slots.default ? slots.default({ CloseModal }) : null}
+                </div>
               </Transition>
             </div>
           </Transition>
@@ -103,6 +119,7 @@ export default defineComponent({
                   style.cover,
                   !props.fullscreen && style.padding,
                   props.mobile && style['mobile-enabled'],
+                  props.sheet && style.sheet,
                 ]}
               >
                 {slots.overlay ? (
@@ -113,10 +130,26 @@ export default defineComponent({
                     onClick={() => !props.actionRequired && CloseModal()}
                   ></div>
                 )}
-                <Transition name={props.mobile ? 'open-mobile' : 'open'}>
-                  {ShowBody.value && slots.default
-                    ? slots.default({ CloseModal })
-                    : null}
+                <Transition
+                  name={
+                    props.sheet
+                      ? 'sheet'
+                      : props.mobile
+                      ? 'open-mobile'
+                      : 'open'
+                  }
+                >
+                  {ShowBody.value ? (
+                    <div
+                      class={style.fullscreen}
+                      onClick={withModifiers(
+                        () => !props.actionRequired && CloseModal(),
+                        ['self'],
+                      )}
+                    >
+                      {slots.default ? slots.default({ CloseModal }) : null}
+                    </div>
+                  ) : null}
                 </Transition>
               </div>
             ) : null}
@@ -134,7 +167,9 @@ export default defineComponent({
 .open-enter-active,
 .open-leave-active,
 .open-mobile-enter-active,
-.open-mobile-leave-active {
+.open-mobile-leave-active,
+.sheet-enter-active,
+.sheet-leave-active {
   transition: all;
   transition-duration: 250ms;
 }
@@ -144,8 +179,15 @@ export default defineComponent({
 .open-enter-from,
 .open-leave-active,
 .open-mobile-enter-from,
-.open-mobile-leave-active {
+.open-mobile-leave-active,
+.sheet-enter-from,
+.sheet-leave-active {
   opacity: 0;
+}
+
+.sheet-enter-from,
+.sheet-leave-active {
+  transform: translateY(100%);
 }
 
 .open-enter-from,
@@ -167,13 +209,13 @@ export default defineComponent({
 <style module>
 .cover {
   @apply fixed inset-0;
-  z-index: -1;
+  z-index: 99999;
 }
 
 .wrapper {
+  @apply w-full h-full;
   @apply flex flex-col;
   @apply items-center justify-center;
-  z-index: 99999;
 }
 
 .padding {
@@ -182,6 +224,17 @@ export default defineComponent({
 
 .overlay {
   @apply bg-black bg-opacity-75;
+  z-index: -1;
+}
+
+.fullscreen {
+  @apply w-full;
+  @apply flex flex-col;
+  @apply items-center justify-center;
+}
+.sheet {
+  @apply pb-0;
+  @apply justify-end;
 }
 
 @media (max-width: 640px) {
