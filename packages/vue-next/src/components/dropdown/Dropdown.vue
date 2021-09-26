@@ -95,10 +95,12 @@ export default defineComponent({
     };
 
     const methods = {
-      onLabelClick() {
-        if (props.searchable) dropdownSearchInput.value?.focus();
-        else if (dropdownLabel.value) dropdownLabel.value?.focus();
-        state.isOpen = !state.isOpen;
+      Toggle(value: boolean | undefined = undefined) {
+        if (value === true || state.isOpen === false) {
+          if (props.searchable) dropdownSearchInput.value?.focus();
+          else if (dropdownLabel.value) dropdownLabel.value?.focus();
+        }
+        state.isOpen = value !== undefined ? value : !state.isOpen;
       },
       onSearch(search: string) {
         state.searchText = search;
@@ -149,7 +151,7 @@ export default defineComponent({
     <slot
       name="input"
       :isOpen="isOpen"
-      :toggle="onLabelClick"
+      :toggle="Toggle"
       :onSearch="onSearch"
       :label="Label"
     >
@@ -159,7 +161,7 @@ export default defineComponent({
           isOpen && rounded != 'full' && style['dropdown-flat-bottom-corners'],
         ]"
         ref="dropdownLabel"
-        @click="onLabelClick"
+        @click="Toggle"
       >
         <div
           :class="style['dropdown-search']"
