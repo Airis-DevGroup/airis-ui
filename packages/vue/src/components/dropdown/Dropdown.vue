@@ -117,7 +117,7 @@ export default {
       $style[`dropdown-rounded-${roundedLevel}`],
     ]"
     ref="dropdownGroup"
-    @blur="!searchable && onBlur"
+    @blur="!searchable && onBlur()"
     @wheel="onWheel"
   >
     <slot
