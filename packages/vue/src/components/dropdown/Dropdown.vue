@@ -271,7 +271,7 @@ export default {
 .dropdown-top {
   @apply z-30;
   @apply shadow;
-  @apply bg-white;
+  @apply w-full bg-white;
   @apply transition-all duration-200;
 }
 
