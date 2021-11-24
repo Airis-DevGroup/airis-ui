@@ -117,7 +117,7 @@ export default {
       $style[`dropdown-rounded-${roundedLevel}`],
     ]"
     ref="dropdownGroup"
-    @blur="!searchable && onBlur"
+    @blur="!searchable && onBlur()"
     @wheel="onWheel"
   >
     <slot
@@ -271,7 +271,7 @@ export default {
 .dropdown-top {
   @apply z-30;
   @apply shadow;
-  @apply bg-white;
+  @apply w-full bg-white;
   @apply transition-all duration-200;
 }
 
