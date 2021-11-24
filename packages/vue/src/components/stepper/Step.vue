@@ -6,6 +6,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     index() {

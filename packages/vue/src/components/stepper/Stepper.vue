@@ -94,10 +94,18 @@ export default {
       this.$emit('finish');
     },
     animateTo(index) {
-      if (index > this.currentIndex) this.animation = 'forward';
+      let newIndex = index;
+      while (
+        this.$children[newIndex] &&
+        this.$children[newIndex].disabled === true
+      ) {
+        if (index > this.currentIndex) newIndex += 1;
+        else newIndex -= 1;
+      }
+      if (newIndex > this.currentIndex) this.animation = 'forward';
       else this.animation = 'backward';
-      this.$emit('change', { old: this.currentIndex, new: index });
-      this.currentIndex = index;
+      this.$emit('change', { old: this.currentIndex, new: newIndex });
+      this.currentIndex = newIndex;
     },
   },
 };
