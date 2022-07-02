@@ -11,7 +11,7 @@ export default {
   props: {
     value: {
       type: [Object, String],
-      required: true,
+      default: null,
     },
     placeholder: {
       type: String,
@@ -43,7 +43,8 @@ export default {
   },
   computed: {
     Label() {
-      if (this.value && this.label && this.value[this.label])
+      if (this.value && typeof this.value == 'string') return this.value;
+      else if (this.value && this.label && this.value[this.label])
         return this.value[this.label];
       else return this.placeholder;
     },
