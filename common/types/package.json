@@ -1,0 +1,17 @@
+{
+  "name": "@airis-ui/types",
+  "version": "0.0.0",
+  "contributors": [
+    "Daniel Hernández <danhernan23i@gmail.com>",
+    "Fabiana Moreno <fabiana.moreno.fm@gmail.com>"
+  ],
+  "files": [
+    "./*"
+  ],
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@airis-ui/eslint-config": "workspace:^0.0.0"
+  }
+}

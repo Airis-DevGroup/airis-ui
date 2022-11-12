@@ -1,0 +1,32 @@
+{
+  "name": "@airis-ui/eslint-config",
+  "version": "0.0.0",
+  "contributors": [
+    "Daniel Hernández <danhernan23i@gmail.com>",
+    "Fabiana Moreno <fabiana.moreno.fm@gmail.com>"
+  ],
+  "files": [
+    "./*"
+  ],
+  "main": "./eslintrc.js",
+  "exports": {
+    ".": "./eslintrc.js",
+    "./typescript": "./typescript.js",
+    "./prettier": "./prettierrc.js"
+  },
+  "peerDependencies": {
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "typescript": "~4.7.4"
+  }
+}

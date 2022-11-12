@@ -24,8 +24,6 @@ build
 *.sln
 *.sw*
 
-# Striclty using Yarn
-package-lock.json
-
 # Optional npm cache directory
 .npm
+.eslintcache

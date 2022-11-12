@@ -1,6 +1,7 @@
 {
-  "name": "airis-ui",
+  "name": "@airis-ui/main",
   "private": true,
+  "license": "MIT",
   "contributors": [
     "Daniel Hernández <danhernan23i@gmail.com>",
     "Fabiana Moreno <fabiana.moreno.fm@gmail.com>"
@@ -8,19 +9,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Airis-DevGroup/airis-ui"
-  },
-  "license": "MIT",
-  "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "dev": "lerna run --parallel dev",
-    "dev:vue": "lerna run --scope @airis-ui/vue dev",
-    "dev:react": "lerna run --scope @airis-ui/react dev",
-    "build": "lerna run --parallel build",
-    "build:vue": "lerna run --scope @airis-ui/vue build",
-    "build:react": "lerna run --scope @airis-ui/react build"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3",
-    "lerna": "^4.0.0"
   }
 }

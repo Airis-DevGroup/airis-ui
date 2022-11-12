@@ -1,6 +1,6 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{vue,js,ts,jsx,tsx}'],
+  purge: ['./src/**/*.{vue,js,ts,jsx,tsx}'],
+  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       minHeight: {
@@ -12,6 +12,9 @@ module.exports = {
         12: '3rem',
       },
     },
+  },
+  variants: {
+    extend: {},
   },
   plugins: [],
 };
