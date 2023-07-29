@@ -41,7 +41,9 @@ export default {
     };
   },
   mounted() {
-    this.totalSteps = this.$children.length;
+    this.totalSteps =
+      this.$children.filter((child) => child.$options.name === 'AirisStep').length ||
+      this.$children.length;
     this.currentIndex =
       typeof this.initialStep == 'number' ? this.initialStep : Number(this.initialStep);
   },

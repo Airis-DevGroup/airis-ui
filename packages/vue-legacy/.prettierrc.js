@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('@airis-ui/eslint-config/prettier')
+  ...require('@airis-ui/eslint-config/prettier'),
 };
