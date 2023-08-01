@@ -58,7 +58,12 @@ export default {
       return this.currentIndex > 0;
     },
     isLastStep() {
-      return this.currentIndex == this.totalSteps - 1;
+      if (this.currentIndex >= this.totalSteps) return true;
+      const children = this.$children.filter(
+        (child) => child.$options.name === 'AirisStep' && !child.$props.disabled,
+      );
+      const currentIndex = children.findIndex((child) => this.currentStep === child);
+      return currentIndex == children.length - 1;
     },
     progress() {
       if (this.isLastStep && this.canFinish) return 100;
