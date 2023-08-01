@@ -163,6 +163,61 @@ importers:
         specifier: ^2.6.14
         version: 2.7.14
 
+  playgrounds/vue-legacy:
+    dependencies:
+      '@airis-ui/eslint-config':
+        specifier: workspace:^
+        version: link:../../common/config
+      '@airis-ui/vue-legacy':
+        specifier: workspace:^
+        version: link:../../packages/vue-legacy
+      core-js:
+        specifier: ^3.8.3
+        version: 3.26.0
+      vue:
+        specifier: ^2.6.14
+        version: 2.7.14
+      vue-router:
+        specifier: ^3.5.1
+        version: 3.5.1(vue@2.7.14)
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.12.16
+        version: 7.20.2
+      '@babel/eslint-parser':
+        specifier: ^7.12.16
+        version: 7.19.1(@babel/core@7.20.2)(eslint@7.32.0)
+      '@vue/cli-plugin-babel':
+        specifier: ~5.0.0
+        version: 5.0.8(@vue/cli-service@5.0.8)(core-js@3.26.0)(vue@2.7.14)
+      '@vue/cli-plugin-eslint':
+        specifier: ~5.0.0
+        version: 5.0.8(@vue/cli-service@5.0.8)(eslint@7.32.0)
+      '@vue/cli-plugin-router':
+        specifier: ~5.0.0
+        version: 5.0.8(@vue/cli-service@5.0.8)
+      '@vue/cli-service':
+        specifier: ~5.0.0
+        version: 5.0.8(@babel/core@7.20.2)(vue-template-compiler@2.7.14)(vue@2.7.14)
+      eslint:
+        specifier: ^7.32.0
+        version: 7.32.0
+      eslint-config-prettier:
+        specifier: ^8.3.0
+        version: 8.5.0(eslint@7.32.0)
+      eslint-plugin-prettier:
+        specifier: ^4.0.0
+        version: 4.2.1(eslint-config-prettier@8.5.0)(eslint@7.32.0)(prettier@2.7.1)
+      eslint-plugin-vue:
+        specifier: ^8.0.3
+        version: 8.7.1(eslint@7.32.0)
+      prettier:
+        specifier: ^2.4.1
+        version: 2.7.1
+      vue-template-compiler:
+        specifier: ^2.6.14
+        version: 2.7.14
+
   playgrounds/vue3:
     dependencies:
       '@airis-ui/vue':
@@ -8282,6 +8337,14 @@ packages:
       vue: 2.7.14
       webpack: 5.75.0
     dev: true
+
+  /vue-router@3.5.1(vue@2.7.14):
+    resolution: {integrity: sha512-RRQNLT8Mzr8z7eL4p7BtKvRaTSGdCbTy2+Mm5HTJvLGYSSeG9gDzNasJPP/yOYKLy+/cLG/ftrqq5fvkFwBJEw==}
+    peerDependencies:
+      vue: ^2
+    dependencies:
+      vue: 2.7.14
+    dev: false
 
   /vue-router@4.1.6(vue@3.2.45):
     resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}
